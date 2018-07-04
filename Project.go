@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -35,7 +36,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost/api/single/entry/"
+	url = "http://localhost:8080/api/single/entry/"
 
 	url += strconv.Itoa(id)
 
@@ -80,7 +81,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost/api/single/entry/file/"
+	url = "http://localhost:8080/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
@@ -101,7 +102,37 @@ start:
 
 func uploadfile() {
 
-	fmt.Println("Upload file")
+	var path string
+
+	fmt.Println("Enter the path of the file")
+
+	path, _ = fmt.Scan(&path)
+
+	fmt.Println(path)
+
+	file, err := os.Open(path)
+
+	if err != nil {
+
+		panic(err)
+
+	}
+
+	defer file.Close()
+
+	res, err := http.Post("http://localhost:8080/api/upload/", "binary/octet-stream", file)
+
+	if err != nil {
+
+		panic(err)
+
+	}
+
+	defer res.Body.Close()
+
+	message, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Printf(string(message))
 
 }
 
@@ -113,7 +144,7 @@ func alllog() {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost/api/all/entries/"
+	url = "http://localhost:8080/api/all/entries/"
 
 	response, err := http.Get(url)
 
@@ -140,7 +171,7 @@ func creatlog() {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	response, err := http.Get("http://localhost")
+	response, err := http.Get("http://localhost:8080/api/post/entry/data/")
 
 	if err != nil {
 
