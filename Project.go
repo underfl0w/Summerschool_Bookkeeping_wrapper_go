@@ -104,35 +104,89 @@ func uploadfile() {
 
 	var path string
 
-	fmt.Println("Enter the path of the file")
+	var name string
 
-	path, _ = fmt.Scan(&path)
+	fmt.Println("Enter the path of the file with the name")
 
-	fmt.Println(path)
+	fmt.Scan(&path)
 
-	file, err := os.Open(path)
+	if _, err := os.Stat(path); os.IsNotExist(err) {
 
-	if err != nil {
+		fmt.Println("File does not exist")
 
-		panic(err)
+	} else {
+
+		fmt.Println("File exists")
+
+		file, err := os.Open(path)
+
+		if err != nil {
+
+			panic(err)
+
+		}
+
+		defer file.Close()
+
+		if err != nil {
+
+			panic(err)
+
+		}
+
+		buff := make([]byte, 512)
+
+		_, err = file.Read(buff)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		filetype := http.DetectContentType(buff)
+
+		fmt.Println(filetype)
+
+		switch filetype {
+
+		case "image/JPG", "image/jpg":
+
+			fmt.Println(filetype)
+
+		case "image/gif", "image/GIF":
+
+			fmt.Println(filetype)
+
+		case "application/DOC", "application/doc":
+
+			fmt.Println(filetype)
+
+		case "application/pdf", "application/PDF":
+
+			fmt.Println(filetype)
+
+		default:
+
+			fmt.Println("unknown file type uploaded")
+		}
+
+		fmt.Scan(&name)
+
+		res, err := http.Post("http://localhost:8080/api/upload/", "binary/octet-stream", file)
+
+		if err != nil {
+
+			panic(err)
+
+		}
+
+		defer res.Body.Close()
+
+		message, _ := ioutil.ReadAll(res.Body)
+
+		fmt.Printf(string(message))
 
 	}
-
-	defer file.Close()
-
-	res, err := http.Post("http://localhost:8080/api/upload/", "binary/octet-stream", file)
-
-	if err != nil {
-
-		panic(err)
-
-	}
-
-	defer res.Body.Close()
-
-	message, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Printf(string(message))
 
 }
 
