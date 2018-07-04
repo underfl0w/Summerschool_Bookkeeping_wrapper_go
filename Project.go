@@ -6,19 +6,26 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strconv"
+	"os"
+
 )
 
-func singlelog() {
 
-	var id int
+func singlelog(token []byte) {
+	token_size := bytes.IndexByte(token, 0)
 
-	var tempo int
+	var (
 
-	var url string
+		id int
 
-	var err error
+		tempo int
+
+		url string
+
+		err error
+
+	)
 
 start:
 
@@ -40,6 +47,8 @@ start:
 
 	url += strconv.Itoa(id)
 
+	url += "?token=" + string(token[:token_size])
+
 	response, err := http.Get(url)
 
 	if err != nil {
@@ -55,7 +64,9 @@ start:
 	}
 }
 
-func retrievefile() {
+
+func retrievefile(token []byte) {
+
 
 	var id int
 
@@ -100,7 +111,8 @@ start:
 	}
 }
 
-func uploadfile() {
+
+func uploadfile(token []byte) {
 
 	var path string
 
@@ -136,7 +148,8 @@ func uploadfile() {
 
 }
 
-func alllog() {
+
+func alllog(token []byte) {
 
 	var url string
 
@@ -161,13 +174,40 @@ func alllog() {
 	}
 }
 
-func userinfo() {
+
+func userinfo(token []byte) {
 
 	fmt.Println("Info")
 
 }
 
-func creatlog() {
+
+func request_token() []byte{
+	/*
+	Fetch the authentication token that is needed for making requests.
+	*/
+	var url string
+
+	url = "http://localhost/"
+
+	response, err := http.Get(url)
+
+	if err != nil {
+
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil
+
+	} else {
+
+		data, _ := ioutil.ReadAll(response.Body)
+
+		return data
+
+	}
+}
+
+func createlog() {
+
 
 	fmt.Println("\nAwaiting reponse\n ")
 
@@ -223,9 +263,10 @@ func printMenu() {
 }
 
 func main() {
+	var token []byte
 
 	var choice int
-
+	token = request_token()
 	for choice != 7 {
 
 		printMenu()
@@ -236,27 +277,27 @@ func main() {
 
 		case 1:
 
-			singlelog()
+			singlelog(token)
 
 		case 2:
 
-			retrievefile()
+			retrievefile(token)
 
 		case 3:
 
-			alllog()
+			alllog(token)
 
 		case 4:
 
-			creatlog()
+			createlog()
 
 		case 5:
 
-			uploadfile()
+			uploadfile(token)
 
 		case 6:
 
-			userinfo()
+			userinfo(token)
 
 		case 7:
 
