@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func single_log() {
+func singlelog() {
 
 	var id int
 
@@ -27,13 +27,13 @@ start:
 
 	if tempo == 0 {
 
-		fmt.Println("\nThis is not a number \n")
+		fmt.Println(" \nThis is not a number \n ")
 
 		goto start
 
 	}
 
-	fmt.Println("\nAwaiting reponse\n")
+	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "http://localhost/api/single/entry/"
 
@@ -54,7 +54,7 @@ start:
 	}
 }
 
-func retrieve_file() {
+func retrievefile() {
 
 	var id int
 
@@ -72,13 +72,13 @@ start:
 
 	if tempo == 0 {
 
-		fmt.Println("\nThis is not a number \n")
+		fmt.Println("\nThis is not a number \n ")
 
 		goto start
 
 	}
 
-	fmt.Println("\nAwaiting reponse\n")
+	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "http://localhost/api/single/entry/file/"
 
@@ -99,19 +99,19 @@ start:
 	}
 }
 
-func upload_file() {
+func uploadfile() {
 
 	fmt.Println("Upload file")
 
 }
 
-func all_log() {
+func alllog() {
 
 	var url string
 
 	var err error
 
-	fmt.Println("\nAwaiting reponse\n")
+	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "http://localhost/api/all/entries/"
 
@@ -130,15 +130,15 @@ func all_log() {
 	}
 }
 
-func user_info() {
+func userinfo() {
 
 	fmt.Println("Info")
 
 }
 
-func creat_log() {
+func creatlog() {
 
-	fmt.Println("\nAwaiting reponse\n")
+	fmt.Println("\nAwaiting reponse\n ")
 
 	response, err := http.Get("http://localhost")
 
@@ -146,19 +146,13 @@ func creat_log() {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
 
-	} else {
-
-		data, _ := ioutil.ReadAll(response.Body)
-
-		fmt.Println(string(data))
-
 	}
 
 	jsonData := map[string]string{"created": "Orange Juice", "subsystem": "French Fries", "class": "3A", "type": "???", "run": "8", "author": "Sangoku", "title": "Pressing orange", "log_entry_text": "A orange explode", "follow_ups": "Where does it come from ?", "interruption_duration": "2018-07-07 21:21:21", "intervention_type": "Emergency"}
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	response, err = http.Post("http://localhost/post", "application/json", bytes.NewBuffer(jsonValue))
+	response, err = http.Post("http://localhost/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 
@@ -193,7 +187,7 @@ func printMenu() {
 
 	fmt.Println("|Choose 7 to exit                                       |")
 
-	fmt.Println("|-------------------------------------------------------|\n")
+	fmt.Println("|-------------------------------------------------------|\n ")
 
 }
 
@@ -211,27 +205,27 @@ func main() {
 
 		case 1:
 
-			single_log()
+			singlelog()
 
 		case 2:
 
-			retrieve_file()
+			retrievefile()
 
 		case 3:
 
-			all_log()
+			alllog()
 
 		case 4:
 
-			creat_log()
+			creatlog()
 
 		case 5:
 
-			upload_file()
+			uploadfile()
 
 		case 6:
 
-			user_info()
+			userinfo()
 
 		case 7:
 
