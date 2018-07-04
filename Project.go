@@ -6,17 +6,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 	"os"
-
+	"strconv"
 )
 
-
 func singlelog(token []byte) {
-	token_size := bytes.IndexByte(token, 0)
+
+	tokensize := bytes.IndexByte(token, 0)
 
 	var (
-
 		id int
 
 		tempo int
@@ -24,7 +22,6 @@ func singlelog(token []byte) {
 		url string
 
 		err error
-
 	)
 
 start:
@@ -47,7 +44,7 @@ start:
 
 	url += strconv.Itoa(id)
 
-	url += "?token=" + string(token[:token_size])
+	url += "?token=" + string(token[:tokensize])
 
 	response, err := http.Get(url)
 
@@ -64,9 +61,7 @@ start:
 	}
 }
 
-
 func retrievefile(token []byte) {
-
 
 	var id int
 
@@ -111,12 +106,17 @@ start:
 	}
 }
 
-
 func uploadfile(token []byte) {
 
 	var path string
 
 	var name string
+
+	var url string
+
+	var id int
+
+	url = "http://localhost:8080/api/upload/"
 
 	fmt.Println("Enter the path of the file with the name")
 
@@ -151,8 +151,11 @@ func uploadfile(token []byte) {
 		_, err = file.Read(buff)
 
 		if err != nil {
+
 			fmt.Println(err)
+
 			os.Exit(1)
+
 		}
 
 		filetype := http.DetectContentType(buff)
@@ -169,7 +172,7 @@ func uploadfile(token []byte) {
 
 			fmt.Println(filetype)
 
-		case "application/DOC", "application/doc":
+		case "application/msword":
 
 			fmt.Println(filetype)
 
@@ -182,9 +185,17 @@ func uploadfile(token []byte) {
 			fmt.Println("unknown file type uploaded")
 		}
 
+		fmt.Println("Enter the name of the file")
+
 		fmt.Scan(&name)
 
-		res, err := http.Post("http://localhost:8080/api/upload/", "binary/octet-stream", file)
+		fmt.Println("Enter the ID of the log")
+
+		fmt.Scan(&id)
+
+		url += strconv.Itoa(id)
+
+		res, err := http.Post(url, filetype, file)
 
 		if err != nil {
 
@@ -201,7 +212,6 @@ func uploadfile(token []byte) {
 	}
 
 }
-
 
 func alllog(token []byte) {
 
@@ -228,17 +238,15 @@ func alllog(token []byte) {
 	}
 }
 
-
 func userinfo(token []byte) {
 
 	fmt.Println("Info")
 
 }
 
-
-func request_token() []byte{
+func requesttoken() []byte {
 	/*
-	Fetch the authentication token that is needed for making requests.
+		Fetch the authentication token that is needed for making requests.
 	*/
 	var url string
 
@@ -249,6 +257,7 @@ func request_token() []byte{
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
+
 		return nil
 
 	} else {
@@ -261,7 +270,6 @@ func request_token() []byte{
 }
 
 func createlog() {
-
 
 	fmt.Println("\nAwaiting reponse\n ")
 
@@ -320,7 +328,9 @@ func main() {
 	var token []byte
 
 	var choice int
-	token = request_token()
+
+	token = requesttoken()
+
 	for choice != 7 {
 
 		printMenu()
