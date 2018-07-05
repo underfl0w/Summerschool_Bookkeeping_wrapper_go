@@ -269,7 +269,7 @@ func requesttoken() []byte {
 	}
 }
 
-func createlog() {
+func createlog([]byte) {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
@@ -353,7 +353,7 @@ func main() {
 
 		case 4:
 
-			createlog()
+			createlog(token)
 
 		case 5:
 
