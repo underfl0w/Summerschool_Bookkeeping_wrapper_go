@@ -4,8 +4,8 @@ import (
 	"io"
 	"os"
 
-	"gopkg.in/h2non/filetype.v1/matchers"
-	"gopkg.in/h2non/filetype.v1/types"
+	"//gopkg.in/h2non/filetype.v1/matchers"
+	"//gopkg.in/h2non/filetype.v1/types"
 )
 
 // Matchers is an alias to matchers.Matchers

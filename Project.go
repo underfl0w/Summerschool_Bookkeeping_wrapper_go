@@ -61,7 +61,6 @@ start:
 
 func retrievefile(token string) {
 
-
 	var id int
 
 	var tempo int
@@ -220,13 +219,11 @@ func alllog(token string) {
 
 	var err error
 
-	tokensize := bytes.IndexByte(token, 0)
-
 	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "heikovm.hihva.nl/api/all/entries/"
 
-	url += "?token=" + string(token[:tokensize])
+	url += "?token=" + token
 
 	response, err := http.Get(url)
 
@@ -249,13 +246,13 @@ func userinfo(token string) {
 
 }
 
-func request_token() string {
+func requesttoken() string {
 	/*
 		Fetch the authentication token that is needed for making requests.
 	*/
 	var url string
 
-	url = "heikovm.hihva.nl/"
+	url = "heikovm.hihva.nl"
 
 	response, err := http.Get(url)
 
