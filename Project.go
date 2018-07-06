@@ -6,15 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 	"os"
-
+	"strconv"
 )
 
 func singlelog(token string) {
 
 	var (
-
 		id int
 
 		tempo int
@@ -22,7 +20,6 @@ func singlelog(token string) {
 		url string
 
 		err error
-
 	)
 
 start:
@@ -41,7 +38,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/single/entry/"
+	url = "heikovm.hihva.nl/api/single/entry/"
 
 	url += strconv.Itoa(id)
 
@@ -89,7 +86,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/single/entry/file/"
+	url = "heikovm.hihva.nl/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
@@ -115,6 +112,12 @@ func uploadfile(token string) {
 	var path string
 
 	var name string
+
+	var url string
+
+	var id int
+
+	url = "heikovm.hihva.nl/api/upload/"
 
 	fmt.Println("Enter the path of the file with the name")
 
@@ -149,8 +152,11 @@ func uploadfile(token string) {
 		_, err = file.Read(buff)
 
 		if err != nil {
+
 			fmt.Println(err)
+
 			os.Exit(1)
+
 		}
 
 		filetype := http.DetectContentType(buff)
@@ -167,7 +173,7 @@ func uploadfile(token string) {
 
 			fmt.Println(filetype)
 
-		case "application/DOC", "application/doc":
+		case "application/msword":
 
 			fmt.Println(filetype)
 
@@ -180,9 +186,17 @@ func uploadfile(token string) {
 			fmt.Println("unknown file type uploaded")
 		}
 
+		fmt.Println("Enter the name of the file")
+
 		fmt.Scan(&name)
 
-		res, err := http.Post("http://localhost:8080/api/upload/", "binary/octet-stream", file)
+		fmt.Println("Enter the ID of the log")
+
+		fmt.Scan(&id)
+
+		url += strconv.Itoa(id)
+
+		res, err := http.Post(url, filetype, file)
 
 		if err != nil {
 
@@ -206,9 +220,13 @@ func alllog(token string) {
 
 	var err error
 
+	tokensize := bytes.IndexByte(token, 0)
+
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/all/entries/"
+	url = "heikovm.hihva.nl/api/all/entries/"
+
+	url += "?token=" + string(token[:tokensize])
 
 	response, err := http.Get(url)
 
@@ -233,12 +251,11 @@ func userinfo(token string) {
 
 func request_token() string {
 	/*
-	Fetch the authentication token that is needed for making requests.
+		Fetch the authentication token that is needed for making requests.
 	*/
 	var url string
 
-
-	url = "http://localhost/"
+	url = "heikovm.hihva.nl/"
 
 	response, err := http.Get(url)
 
@@ -257,12 +274,11 @@ func request_token() string {
 	}
 }
 
-func createlog() {
-
+func createlog(token string) {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	response, err := http.Get("http://localhost:8080/api/post/entry/data/")
+	response, err := http.Get("heikovm.hihva.nl/api/post/entry/data/")
 
 	if err != nil {
 
@@ -274,7 +290,7 @@ func createlog() {
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	response, err = http.Post("http://localhost/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
+	response, err = http.Post("heikovm.hihva.nl/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 
@@ -317,7 +333,9 @@ func main() {
 	var token string
 
 	var choice int
-	token = request_token()
+
+	token = requesttoken()
+
 	for choice != 7 {
 
 		printMenu()
@@ -340,7 +358,7 @@ func main() {
 
 		case 4:
 
-			createlog()
+			createlog(token)
 
 		case 5:
 
