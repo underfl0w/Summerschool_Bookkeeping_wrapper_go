@@ -221,13 +221,11 @@ func alllog(token string) {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "heikovm.hihva.nl/api/all/entries/"
+	url = "http://heikovm.hihva.nl/api/all/entries/"
 
-<<<<<<< HEAD
+
 	url += "?token=" + token
 
-=======
->>>>>>> d5bef569e6cd0f938eadeb1324b74c3e41489208
 	response, err := http.Get(url)
 
 	if err != nil {
@@ -249,16 +247,16 @@ func userinfo(token string) {
 
 }
 
+// This function is not needed anymore. The need for tokens has been disabled by Frederick.
 func requesttoken() string {
 	/*
 		Fetch the authentication token that is needed for making requests.
 	*/
 	var url string
 
-	url = "heikovm.hihva.nl"
+	url = "http://heikovm.hihva.nl/"
 
 	response, err := http.Get(url)
-
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -266,10 +264,7 @@ func requesttoken() string {
 
 	} else {
 
-		data, _ := ioutil.ReadAll(response.Body)
-		dataSize := bytes.IndexByte(data, 0)
-
-		return string(data[:dataSize])
+		return string(response.Request.URL.RawQuery)
 
 	}
 }
