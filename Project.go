@@ -220,13 +220,9 @@ func alllog(token string) {
 
 	var err error
 
-	tokensize := bytes.IndexByte(token, 0)
-
 	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "heikovm.hihva.nl/api/all/entries/"
-
-	url += "?token=" + string(token[:tokensize])
 
 	response, err := http.Get(url)
 
@@ -249,7 +245,7 @@ func userinfo(token string) {
 
 }
 
-func request_token() string {
+func requesttoken() string {
 	/*
 		Fetch the authentication token that is needed for making requests.
 	*/
