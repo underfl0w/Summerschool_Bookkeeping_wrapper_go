@@ -40,7 +40,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/single/entry/"
+	url = "heikovm.hihva.nl/api/single/entry/"
 
 	url += strconv.Itoa(id)
 
@@ -87,7 +87,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/single/entry/file/"
+	url = "heikovm.hihva.nl/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
@@ -116,7 +116,7 @@ func uploadfile(token []byte) {
 
 	var id int
 
-	url = "http://localhost:8080/api/upload/"
+	url = "heikovm.hihva.nl/api/upload/"
 
 	fmt.Println("Enter the path of the file with the name")
 
@@ -219,9 +219,13 @@ func alllog(token []byte) {
 
 	var err error
 
+	tokensize := bytes.IndexByte(token, 0)
+
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://localhost:8080/api/all/entries/"
+	url = "heikovm.hihva.nl/api/all/entries/"
+
+	url += "?token=" + string(token[:tokensize])
 
 	response, err := http.Get(url)
 
@@ -250,7 +254,7 @@ func requesttoken() []byte {
 	*/
 	var url string
 
-	url = "http://localhost/"
+	url = "heikovm.hihva.nl/"
 
 	response, err := http.Get(url)
 
@@ -273,7 +277,7 @@ func createlog([]byte) {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	response, err := http.Get("http://localhost:8080/api/post/entry/data/")
+	response, err := http.Get("heikovm.hihva.nl/api/post/entry/data/")
 
 	if err != nil {
 
@@ -285,7 +289,7 @@ func createlog([]byte) {
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	response, err = http.Post("http://localhost/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
+	response, err = http.Post("heikovm.hihva.nl/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 
