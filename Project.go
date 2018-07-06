@@ -223,8 +223,11 @@ func alllog(token string) {
 
 	url = "heikovm.hihva.nl/api/all/entries/"
 
+<<<<<<< HEAD
 	url += "?token=" + token
 
+=======
+>>>>>>> d5bef569e6cd0f938eadeb1324b74c3e41489208
 	response, err := http.Get(url)
 
 	if err != nil {
