@@ -8,9 +8,10 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
-func singlelog(token string) {
+func singlelog() {
 
 	var (
 		id int
@@ -38,11 +39,11 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "heikovm.hihva.nl/api/single/entry/"
+	url = "http://heikovm.hihva.nl/api/single/entry/"
 
 	url += strconv.Itoa(id)
 
-	url += "?token=" + token
+	//url += "?token=" + token
 
 	response, err := http.Get(url)
 
@@ -59,7 +60,7 @@ start:
 	}
 }
 
-func retrievefile(token string) {
+func retrievefile() {
 
 	var id int
 
@@ -85,11 +86,11 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "heikovm.hihva.nl/api/single/entry/file/"
+	url = "http://heikovm.hihva.nl/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
-	url += "?token="
+	//url += "?token="
 
 	response, err := http.Get(url)
 
@@ -106,7 +107,7 @@ start:
 	}
 }
 
-func uploadfile(token string) {
+func uploadfile() {
 
 	var path string
 
@@ -116,7 +117,7 @@ func uploadfile(token string) {
 
 	var id int
 
-	url = "heikovm.hihva.nl/api/upload/"
+	url = "http://heikovm.hihva.nl/api/upload/"
 
 	fmt.Println("Enter the path of the file with the name")
 
@@ -213,7 +214,7 @@ func uploadfile(token string) {
 
 }
 
-func alllog(token string) {
+func alllog() {
 
 	var url string
 
@@ -223,8 +224,7 @@ func alllog(token string) {
 
 	url = "http://heikovm.hihva.nl/api/all/entries/"
 
-
-	url += "?token=" + token
+	//url += "?token=" + token
 
 	response, err := http.Get(url)
 
@@ -241,7 +241,7 @@ func alllog(token string) {
 	}
 }
 
-func userinfo(token string) {
+func userinfo() {
 
 	fmt.Println("Info")
 
@@ -257,9 +257,13 @@ func requesttoken() string {
 	url = "http://heikovm.hihva.nl/"
 
 	response, err := http.Get(url)
+
+	fmt.Println("\n", response, "\n")
+
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
+
 		return ""
 
 	} else {
@@ -269,11 +273,37 @@ func requesttoken() string {
 	}
 }
 
-func createlog(token string) {
+func createlog() {
+
+	var url string
+
+	var subsystem string
+
+	var class string
+
+	var typelog string
+
+	var run string
+
+	var author string
+
+	var title string
+
+	var text string
+
+	var followsup string
+
+	var interruptionduration string
+
+	var interventiontype string
+
+	var date string
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	response, err := http.Get("heikovm.hihva.nl/api/post/entry/data/")
+	url = "http://heikovm.hihva.nl/api/post/entry/data/"
+
+	response, err := http.Get(url)
 
 	if err != nil {
 
@@ -281,11 +311,57 @@ func createlog(token string) {
 
 	}
 
-	jsonData := map[string]string{"created": "Orange Juice", "subsystem": "French Fries", "class": "3A", "type": "???", "run": "8", "author": "Sangoku", "title": "Pressing orange", "log_entry_text": "A orange explode", "follow_ups": "Where does it come from ?", "interruption_duration": "2018-07-07 21:21:21", "intervention_type": "Emergency"}
+	created := time.Now()
+
+	date = created.Format("2006-01-02 15:04:05")
+
+	fmt.Println("\n", date, "\n")
+
+	fmt.Println("Enter the susbsystem : \n")
+
+	fmt.Scan(&subsystem)
+
+	fmt.Println("\nEnter the class : \n ")
+
+	fmt.Scan(&class)
+
+	fmt.Println("\nEnter the type of run : \n ")
+
+	fmt.Scan(&typelog)
+
+	fmt.Println("\nEnter the run number : \n ")
+
+	fmt.Scan(&run)
+
+	fmt.Println("\nEnter the author : \n ")
+
+	fmt.Scan(&author)
+
+	fmt.Println("\nEnter the title : \n ")
+
+	fmt.Scan(&title)
+
+	fmt.Println("\nEnter the description : \n ")
+
+	fmt.Scan(&text)
+
+	fmt.Println("\nEnter the follow up : \n ")
+
+	fmt.Scan(&followsup)
+
+	fmt.Println("\nEnter the interruption duration : \n ")
+
+	fmt.Scan(&interruptionduration)
+
+	fmt.Println("\nEnter the intervention type : \n ")
+
+	fmt.Scan(&interventiontype)
+
+	jsonData := map[string]string{"created": date, "subsystem": string(subsystem), "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	response, err = http.Post("heikovm.hihva.nl/api/post/entry/data/", "application/json", bytes.NewBuffer(jsonValue))
+	response, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 
@@ -325,11 +401,11 @@ func printMenu() {
 }
 
 func main() {
-	var token string
+	//var token string
 
 	var choice int
 
-	token = requesttoken()
+	//token = requesttoken()
 
 	for choice != 7 {
 
@@ -341,27 +417,27 @@ func main() {
 
 		case 1:
 
-			singlelog(token)
+			singlelog()
 
 		case 2:
 
-			retrievefile(token)
+			retrievefile()
 
 		case 3:
 
-			alllog(token)
+			alllog()
 
 		case 4:
 
-			createlog(token)
+			createlog()
 
 		case 5:
 
-			uploadfile(token)
+			uploadfile()
 
 		case 6:
 
-			userinfo(token)
+			userinfo()
 
 		case 7:
 
