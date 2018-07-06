@@ -11,9 +11,7 @@ import (
 
 )
 
-
-func singlelog(token []byte) {
-	token_size := bytes.IndexByte(token, 0)
+func singlelog(token string) {
 
 	var (
 
@@ -47,7 +45,7 @@ start:
 
 	url += strconv.Itoa(id)
 
-	url += "?token=" + string(token[:token_size])
+	url += "?token=" + token
 
 	response, err := http.Get(url)
 
@@ -64,8 +62,7 @@ start:
 	}
 }
 
-
-func retrievefile(token []byte) {
+func retrievefile(token string) {
 
 
 	var id int
@@ -96,6 +93,8 @@ start:
 
 	url += strconv.Itoa(id)
 
+	url += "?token="
+
 	response, err := http.Get(url)
 
 	if err != nil {
@@ -111,8 +110,7 @@ start:
 	}
 }
 
-
-func uploadfile(token []byte) {
+func uploadfile(token string) {
 
 	var path string
 
@@ -202,8 +200,7 @@ func uploadfile(token []byte) {
 
 }
 
-
-func alllog(token []byte) {
+func alllog(token string) {
 
 	var url string
 
@@ -228,19 +225,18 @@ func alllog(token []byte) {
 	}
 }
 
-
-func userinfo(token []byte) {
+func userinfo(token string) {
 
 	fmt.Println("Info")
 
 }
 
-
-func request_token() []byte{
+func request_token() string {
 	/*
 	Fetch the authentication token that is needed for making requests.
 	*/
 	var url string
+
 
 	url = "http://localhost/"
 
@@ -249,13 +245,14 @@ func request_token() []byte{
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
-		return nil
+		return ""
 
 	} else {
 
 		data, _ := ioutil.ReadAll(response.Body)
+		dataSize := bytes.IndexByte(data, 0)
 
-		return data
+		return string(data[:dataSize])
 
 	}
 }
@@ -317,7 +314,7 @@ func printMenu() {
 }
 
 func main() {
-	var token []byte
+	var token string
 
 	var choice int
 	token = request_token()
