@@ -315,7 +315,7 @@ func createlog() {
 
 	date = created.Format("2006-01-02 15:04:05")
 
-	fmt.Println("\n", date, "\n")
+	fmt.Println(date, "\n")
 
 	fmt.Println("Enter the susbsystem : \n")
 
@@ -351,13 +351,13 @@ func createlog() {
 
 	fmt.Println("\nEnter the interruption duration : \n ")
 
-	fmt.Scan(&interruptionduration)
+	fmt.Scanf("%s", interruptionduration)
 
 	fmt.Println("\nEnter the intervention type : \n ")
 
 	fmt.Scan(&interventiontype)
 
-	jsonData := map[string]string{"created": date, "subsystem": string(subsystem), "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
+	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
 	jsonValue, _ := json.Marshal(jsonData)
 
