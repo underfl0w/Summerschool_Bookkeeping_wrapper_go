@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"time"
 	"bufio"
+	"strings"
 )
 
 func singlelog() {
@@ -321,44 +322,82 @@ func createlog() {
 	fmt.Println("Enter the susbsystem : \n")
 
 	reader := bufio.NewReader(os.Stdin)
+
 	subsystem, _ = reader.ReadString('\n')
-	fmt.Println(subsystem)
+
+	subsystem = strings.Replace(subsystem, "\n", "", -1)
 
 	fmt.Println("\nEnter the class : \n ")
 
-	fmt.Scan(&class)
+	reader1 := bufio.NewReader(os.Stdin)
+
+	class, _ = reader1.ReadString('\n')
+
+	class = strings.Replace(class, "\n", "", -1)
 
 	fmt.Println("\nEnter the type of run : \n ")
 
-	fmt.Scan(&typelog)
+	reader2 := bufio.NewReader(os.Stdin)
+
+	typelog, _ = reader2.ReadString('\n')
+
+	typelog = strings.Replace(typelog, "\n", "", -1)
 
 	fmt.Println("\nEnter the run number : \n ")
 
-	fmt.Scan(&run)
+	reader3 := bufio.NewReader(os.Stdin)
+
+	run, _ = reader3.ReadString('\n')
+
+	run = strings.Replace(run, "\n", "", -1)
 
 	fmt.Println("\nEnter the author : \n ")
 
-	fmt.Scan(&author)
+	reader4 := bufio.NewReader(os.Stdin)
+
+	author, _ = reader4.ReadString('\n')
+
+	author = strings.Replace(author, "\n", "", -1)
 
 	fmt.Println("\nEnter the title : \n ")
 
-	fmt.Scan(&title)
+	reader5 := bufio.NewReader(os.Stdin)
+
+	title, _ = reader5.ReadString('\n')
+
+	title = strings.Replace(title, "\n", "", -1)
 
 	fmt.Println("\nEnter the description : \n ")
 
-	fmt.Scan(&text)
+	reader6 := bufio.NewReader(os.Stdin)
+
+	text, _ = reader6.ReadString('\n')
+
+	text = strings.Replace(text, "\n", "", -1)
 
 	fmt.Println("\nEnter the follow up : \n ")
 
-	fmt.Scan(&followsup)
+	reader7 := bufio.NewReader(os.Stdin)
+
+	followsup, _ = reader7.ReadString('\n')
+
+	followsup = strings.Replace(followsup, "\n", "", -1)
 
 	fmt.Println("\nEnter the interruption duration : \n ")
 
-	fmt.Scanf("%s", interruptionduration)
+	reader8 := bufio.NewReader(os.Stdin)
+
+	interruptionduration, _ = reader8.ReadString('\n')
+
+	interruptionduration = strings.Replace(interruptionduration, "\n", "", -1)
 
 	fmt.Println("\nEnter the intervention type : \n ")
 
-	fmt.Scan(&interventiontype)
+	reader9 := bufio.NewReader(os.Stdin)
+
+	interventiontype, _ = reader9.ReadString('\n')
+
+	interventiontype = strings.Replace(interventiontype, "\n", "", -1)
 
 	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
@@ -370,15 +409,7 @@ func createlog() {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
 
-	} else {
-
-		data, _ := ioutil.ReadAll(response.Body)
-
-		fmt.Println(string(data))
-
-	}
-
-	fmt.Println("End")
+	} 
 }
 
 func printMenu() {
@@ -411,11 +442,6 @@ func main() {
 	//token = requesttoken()
 
 	for choice != 7 {
-
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Enter text: ")
-		text, _ := reader.ReadString('\n')
-		fmt.Println(text)
 
 		printMenu()
 
