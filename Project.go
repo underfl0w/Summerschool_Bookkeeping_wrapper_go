@@ -11,7 +11,24 @@ import (
 	"time"
 	"bufio"
 	"strings"
+	//"io"
+	//"log"
 )
+
+type log_type struct {
+	RunId string
+	Time time.Time
+	Subsystem string
+	Class string
+	Type_Run string
+	Run_Number string
+	Author string
+	Title string
+	Text_Entry string
+	Follow_ups string
+	Interruption_duration string
+	Intervention_type string
+}
 
 func singlelog() {
 
@@ -222,6 +239,8 @@ func alllog() {
 
 	var err error
 
+	var log []log_type
+
 	fmt.Println("\nAwaiting reponse\n ")
 
 	url = "http://heikovm.hihva.nl/api/all/entries/"
@@ -236,10 +255,21 @@ func alllog() {
 
 	} else {
 
-		data, _ := ioutil.ReadAll(response.Body)
+		data, err := ioutil.ReadAll(response.Body)
 
-		fmt.Println(string(data))
+		fmt.Printf(string(data))
 
+		if err != nil {
+			panic(err.Error())
+		}
+
+		marshal:=json.Unmarshal(data,&log)
+
+		if marshal == nil {
+			for l := range log {
+				fmt.Printf("{\nrun_id: %s,\ncreated: %v,\nsubsystem: %v,\nclass: %v,\ntype: %v,\nrun: %v,\nauthor: %v,\ntitle: %v,\nlog_entry_text: %v,\nfollow_ups: %v,\ninterruption_duration: %v,\nintervention_type: %v,\n}\n",log[l].RunId, log[l].Time, log[l].Subsystem, log[l].Class, log[l].Type_Run, log[l].Run_Number, log[l].Author, log[l].Title, log[l].Text_Entry, log[l].Follow_ups, log[l].Interruption_duration, log[l].Intervention_type)
+			}
+		}
 	}
 }
 
@@ -305,7 +335,7 @@ func createlog() {
 
 	url = "http://heikovm.hihva.nl/api/post/entry/data/"
 
-	response, err := http.Get(url)
+	_, err := http.Get(url)
 
 	if err != nil {
 
@@ -399,17 +429,27 @@ func createlog() {
 
 	interventiontype = strings.Replace(interventiontype, "\n", "", -1)
 
-	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
+	jsonData := map[string]string{"created": date,
+	"subsystem": subsystem,
+	"class": class,
+	"type": typelog,
+	"run": run,
+	"author": author,
+	"title": title,
+	"log_entry_text": text,
+	"follow_ups": followsup,
+	"interruption_duration": interruptionduration,
+	"intervention_type": interventiontype}
 
-	jsonValue, _ := json.Marshal(jsonData)
+	jsonValue, _ := json.MarshalIndent(jsonData,"","    ")
 
-	response, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
 
-	} 
+	}
 }
 
 func printMenu() {
