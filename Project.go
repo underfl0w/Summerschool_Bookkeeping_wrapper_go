@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"bufio"
 )
 
 func singlelog() {
@@ -319,7 +320,9 @@ func createlog() {
 
 	fmt.Println("Enter the susbsystem : \n")
 
-	fmt.Scan(&subsystem)
+	reader := bufio.NewReader(os.Stdin)
+	subsystem, _ = reader.ReadString('\n')
+	fmt.Println(subsystem)
 
 	fmt.Println("\nEnter the class : \n ")
 
@@ -408,6 +411,11 @@ func main() {
 	//token = requesttoken()
 
 	for choice != 7 {
+
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Enter text: ")
+		text, _ := reader.ReadString('\n')
+		fmt.Println(text)
 
 		printMenu()
 
