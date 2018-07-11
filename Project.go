@@ -11,9 +11,153 @@ import (
 	"time"
 	"bufio"
 	"strings"
-	//"io"
-	//"log"
+
+	"math/rand"
 )
+
+func test_unitary(){
+
+	var url string
+
+	var subsystem string
+
+	var class string
+
+	var typelog string
+
+	var run string
+
+	var author string
+
+	var title string
+
+	var text string
+
+	var followsup string
+
+	var interruptionduration string
+
+	var interventiontype string
+
+	var date string
+
+	var tempo int
+
+	var id int
+
+	fmt.Println("\nAwaiting reponse\n")
+
+	url = "http://localhost:8081/api/post/entry/data/"
+
+	_, err := http.Get(url)
+
+	if err != nil {
+
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+
+	}
+
+	start:
+
+	fmt.Println("Enter a number\n")
+
+	tempo, _ = fmt.Scan(&id)
+
+	if tempo == 0 {
+
+		fmt.Println(" \nThis is not a number \n ")
+
+		goto start
+
+	}
+
+	for i := 0; i < id; i++  {
+
+		subsystem+=string(rand.Intn(122 - 97) + 97)
+
+		class+=string(rand.Intn(122 - 97) + 97)
+
+		typelog+=string(rand.Intn(122 - 97) + 97)
+
+		run+=string(rand.Intn(122 - 97) + 97)
+
+		author+=string(rand.Intn(122 - 97) + 97)
+
+		title+=string(rand.Intn(122 - 97) + 97)
+
+		text+=string(rand.Intn(122 - 97) + 97)
+
+		followsup+=string(rand.Intn(122 - 97) + 97)
+
+		interventiontype+=string(rand.Intn(122 - 97) + 97)
+		
+	}
+
+	date=strconv.Itoa(rand.Intn(20))+strconv.Itoa(rand.Intn(100))+"-"+strconv.Itoa(rand.Intn(13))+"-"+strconv.Itoa(rand.Intn(32))+" "+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))
+
+	interruptionduration=strconv.Itoa(rand.Intn(20))+strconv.Itoa(rand.Intn(100))+"-"+strconv.Itoa(rand.Intn(13))+"-"+strconv.Itoa(rand.Intn(32))+" "+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))
+
+	fmt.Println("\n")
+
+	fmt.Println(date)
+
+	fmt.Println("\n")
+
+	fmt.Println(subsystem)
+
+	fmt.Println("\n")
+
+	fmt.Println(class)
+
+	fmt.Println("\n")
+
+	fmt.Println(typelog)
+
+	fmt.Println("\n")
+
+	fmt.Println(run)
+
+	fmt.Println("\n")
+
+	fmt.Println(author)
+
+	fmt.Println("\n")
+
+	fmt.Println(title)
+
+	fmt.Println("\n")
+
+	fmt.Println(text)
+
+	fmt.Println("\n")
+
+	fmt.Println(followsup)
+
+	fmt.Println("\n")
+
+	fmt.Println(interruptionduration)
+
+	fmt.Println("\n")
+
+	fmt.Println(interventiontype)
+
+	fmt.Println("\n")
+
+	jsonData := map[string]string{"created": date,"subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
+
+	jsonValue, _ := json.Marshal(jsonData)
+
+	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+
+	if err != nil {
+
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+
+	}
+
+	fmt.Println(jsonData)
+
+}
 
 func singlelog() {
 
@@ -41,7 +185,7 @@ start:
 
 	}
 
-	fmt.Println("\nAwaiting reponse\n ")
+	fmt.Println("\nAwaiting reponse")
 
 	url = "http://localhost:8081/api/single/entry/"
 
@@ -102,7 +246,7 @@ start:
 
 	}
 
-	fmt.Println("\nAwaiting reponse\n ")
+	fmt.Println("\nAwaiting reponse")
 
 	url = "http://localhost:8081/api/single/entry/file/"
 
@@ -238,7 +382,7 @@ func alllog() {
 
 	var err error
 
-	fmt.Println("\nAwaiting reponse\n ")
+	fmt.Println("\nAwaiting reponse")
 
 	url = "http://localhost:8081/api/all/entries/"
 
@@ -339,7 +483,7 @@ func createlog() {
 
 	var date string
 
-	fmt.Println("\nAwaiting reponse\n ")
+	fmt.Println("\nAwaiting reponse")
 
 	url = "http://localhost:8081/api/post/entry/data/"
 
@@ -514,6 +658,10 @@ func main() {
 		case 7:
 
 			fmt.Println("Bye !")
+
+		case 8:
+
+			test_unitary()
 
 		default:
 
