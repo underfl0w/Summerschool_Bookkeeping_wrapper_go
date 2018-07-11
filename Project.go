@@ -15,21 +15,6 @@ import (
 	//"log"
 )
 
-type log_type struct {
-	RunId int
-	Time time.Time
-	Subsystem string
-	Class string
-	Type_Run string
-	Run_Number int
-	Author string
-	Title string
-	Text_Entry string
-	Follow_ups string
-	Interruption_duration time.Time
-	Intervention_type string
-}
-
 func singlelog() {
 
 	var (
@@ -252,8 +237,6 @@ func alllog() {
 	var url string
 
 	var err error
-
-	//var buffer_string bytes.Buffer
 
 	fmt.Println("\nAwaiting reponse\n ")
 
