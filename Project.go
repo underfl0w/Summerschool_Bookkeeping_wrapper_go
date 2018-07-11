@@ -16,17 +16,17 @@ import (
 )
 
 type log_type struct {
-	RunId string
+	RunId int
 	Time time.Time
 	Subsystem string
 	Class string
 	Type_Run string
-	Run_Number string
+	Run_Number int
 	Author string
 	Title string
 	Text_Entry string
 	Follow_ups string
-	Interruption_duration string
+	Interruption_duration time.Time
 	Intervention_type string
 }
 
@@ -58,7 +58,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://heikovm.hihva.nl/api/single/entry/"
+	url = "http://localhost:8081/api/single/entry/"
 
 	url += strconv.Itoa(id)
 
@@ -72,9 +72,23 @@ start:
 
 	} else {
 
-		data, _ := ioutil.ReadAll(response.Body)
+		contents, _ := ioutil.ReadAll(response.Body)
 
-		fmt.Println(string(data))
+		Stringcontents:=string(contents)
+
+		number_0:=strings.Count(Stringcontents,",")
+
+		number_1:=strings.Count(Stringcontents,"{")
+
+		number_2:=strings.Count(Stringcontents,"}")
+
+		data:=strings.Replace(Stringcontents,",",",\n",number_0)
+
+		data=strings.Replace(data,"{","\n{\n",number_1)
+
+		data=strings.Replace(data,"}","\n}\n",number_2)
+
+		fmt.Println(data)
 
 	}
 }
@@ -105,7 +119,7 @@ start:
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://heikovm.hihva.nl/api/single/entry/file/"
+	url = "http://localhost:8081/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
@@ -136,7 +150,7 @@ func uploadfile() {
 
 	var id int
 
-	url = "http://heikovm.hihva.nl/api/upload/"
+	url = "http://localhost:8081/api/upload/"
 
 	fmt.Println("Enter the path of the file with the name")
 
@@ -239,11 +253,11 @@ func alllog() {
 
 	var err error
 
-	var log []log_type
+	//var buffer_string bytes.Buffer
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://heikovm.hihva.nl/api/all/entries/"
+	url = "http://localhost:8081/api/all/entries/"
 
 	//url += "?token=" + token
 
@@ -255,21 +269,32 @@ func alllog() {
 
 	} else {
 
-		data, err := ioutil.ReadAll(response.Body)
+		defer response.Body.Close()
 
-		fmt.Printf(string(data))
+		contents, err := ioutil.ReadAll(response.Body)
 
 		if err != nil {
-			panic(err.Error())
+
+			panic(err)
+
 		}
 
-		marshal:=json.Unmarshal(data,&log)
+		Stringcontents:=string(contents)
 
-		if marshal == nil {
-			for l := range log {
-				fmt.Printf("{\nrun_id: %s,\ncreated: %v,\nsubsystem: %v,\nclass: %v,\ntype: %v,\nrun: %v,\nauthor: %v,\ntitle: %v,\nlog_entry_text: %v,\nfollow_ups: %v,\ninterruption_duration: %v,\nintervention_type: %v,\n}\n",log[l].RunId, log[l].Time, log[l].Subsystem, log[l].Class, log[l].Type_Run, log[l].Run_Number, log[l].Author, log[l].Title, log[l].Text_Entry, log[l].Follow_ups, log[l].Interruption_duration, log[l].Intervention_type)
-			}
-		}
+		number_0:=strings.Count(Stringcontents,",")
+
+		number_1:=strings.Count(Stringcontents,"{")
+
+		number_2:=strings.Count(Stringcontents,"}")
+
+		data:=strings.Replace(Stringcontents,",",",\n",number_0)
+
+		data=strings.Replace(data,"{","\n{\n",number_1)
+
+		data=strings.Replace(data,"}","\n}\n",number_2)
+
+		fmt.Println(data)
+
 	}
 }
 
@@ -333,7 +358,7 @@ func createlog() {
 
 	fmt.Println("\nAwaiting reponse\n ")
 
-	url = "http://heikovm.hihva.nl/api/post/entry/data/"
+	url = "http://localhost:8081/api/post/entry/data/"
 
 	_, err := http.Get(url)
 
@@ -429,19 +454,9 @@ func createlog() {
 
 	interventiontype = strings.Replace(interventiontype, "\n", "", -1)
 
-	jsonData := map[string]string{"created": date,
-	"subsystem": subsystem,
-	"class": class,
-	"type": typelog,
-	"run": run,
-	"author": author,
-	"title": title,
-	"log_entry_text": text,
-	"follow_ups": followsup,
-	"interruption_duration": interruptionduration,
-	"intervention_type": interventiontype}
+	jsonData := map[string]string{"created": date,"subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
-	jsonValue, _ := json.MarshalIndent(jsonData,"","    ")
+	jsonValue, _ := json.Marshal(jsonData)
 
 	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 
