@@ -15,7 +15,7 @@ import (
 	"math/rand"
 )
 
-func test_unitary(){
+func test_unitary() {
 
 	var url string
 
@@ -57,7 +57,7 @@ func test_unitary(){
 
 	}
 
-	start:
+start:
 
 	fmt.Println("Enter a number\n")
 
@@ -71,31 +71,31 @@ func test_unitary(){
 
 	}
 
-	for i := 0; i < id; i++  {
+	for i := 0; i < id; i++ {
 
-		subsystem+=string(rand.Intn(122 - 97) + 97)
+		subsystem += string(rand.Intn(122-97) + 97)
 
-		class+=string(rand.Intn(122 - 97) + 97)
+		class += string(rand.Intn(122-97) + 97)
 
-		typelog+=string(rand.Intn(122 - 97) + 97)
+		typelog += string(rand.Intn(122-97) + 97)
 
-		run+=string(rand.Intn(122 - 97) + 97)
+		run += string(rand.Intn(122-97) + 97)
 
-		author+=string(rand.Intn(122 - 97) + 97)
+		author += string(rand.Intn(122-97) + 97)
 
-		title+=string(rand.Intn(122 - 97) + 97)
+		title += string(rand.Intn(122-97) + 97)
 
-		text+=string(rand.Intn(122 - 97) + 97)
+		text += string(rand.Intn(122-97) + 97)
 
-		followsup+=string(rand.Intn(122 - 97) + 97)
+		followsup += string(rand.Intn(122-97) + 97)
 
-		interventiontype+=string(rand.Intn(122 - 97) + 97)
-		
+		interventiontype += string(rand.Intn(122-97) + 97)
+
 	}
 
-	date=strconv.Itoa(rand.Intn(20))+strconv.Itoa(rand.Intn(100))+"-"+strconv.Itoa(rand.Intn(13))+"-"+strconv.Itoa(rand.Intn(32))+" "+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))
+	date = strconv.Itoa(rand.Intn(20)) + strconv.Itoa(rand.Intn(100)) + "-" + strconv.Itoa(rand.Intn(13)) + "-" + strconv.Itoa(rand.Intn(32)) + " " + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24))
 
-	interruptionduration=strconv.Itoa(rand.Intn(20))+strconv.Itoa(rand.Intn(100))+"-"+strconv.Itoa(rand.Intn(13))+"-"+strconv.Itoa(rand.Intn(32))+" "+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))+":"+strconv.Itoa(rand.Intn(24))
+	interruptionduration = strconv.Itoa(rand.Intn(20)) + strconv.Itoa(rand.Intn(100)) + "-" + strconv.Itoa(rand.Intn(13)) + "-" + strconv.Itoa(rand.Intn(32)) + " " + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24))
 
 	fmt.Println("\n")
 
@@ -143,7 +143,7 @@ func test_unitary(){
 
 	fmt.Println("\n")
 
-	jsonData := map[string]string{"created": date,"subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
+	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
 	jsonValue, _ := json.Marshal(jsonData)
 
@@ -203,19 +203,19 @@ start:
 
 		contents, _ := ioutil.ReadAll(response.Body)
 
-		Stringcontents:=string(contents)
+		Stringcontents := string(contents)
 
-		number_0:=strings.Count(Stringcontents,",")
+		number_0 := strings.Count(Stringcontents, ",")
 
-		number_1:=strings.Count(Stringcontents,"{")
+		number_1 := strings.Count(Stringcontents, "{")
 
-		number_2:=strings.Count(Stringcontents,"}")
+		number_2 := strings.Count(Stringcontents, "}")
 
-		data:=strings.Replace(Stringcontents,",",",\n",number_0)
+		data := strings.Replace(Stringcontents, ",", ",\n", number_0)
 
-		data=strings.Replace(data,"{","\n{\n",number_1)
+		data = strings.Replace(data, "{", "\n{\n", number_1)
 
-		data=strings.Replace(data,"}","\n}\n",number_2)
+		data = strings.Replace(data, "}", "\n}\n", number_2)
 
 		fmt.Println(data)
 
@@ -406,19 +406,19 @@ func alllog() {
 
 		}
 
-		Stringcontents:=string(contents)
+		Stringcontents := string(contents)
 
-		number_0:=strings.Count(Stringcontents,",")
+		number_0 := strings.Count(Stringcontents, ",")
 
-		number_1:=strings.Count(Stringcontents,"{")
+		number_1 := strings.Count(Stringcontents, "{")
 
-		number_2:=strings.Count(Stringcontents,"}")
+		number_2 := strings.Count(Stringcontents, "}")
 
-		data:=strings.Replace(Stringcontents,",",",\n",number_0)
+		data := strings.Replace(Stringcontents, ",", ",\n", number_0)
 
-		data=strings.Replace(data,"{","\n{\n",number_1)
+		data = strings.Replace(data, "{", "\n{\n", number_1)
 
-		data=strings.Replace(data,"}","\n}\n",number_2)
+		data = strings.Replace(data, "}", "\n}\n", number_2)
 
 		fmt.Println(data)
 
@@ -581,11 +581,13 @@ func createlog() {
 
 	interventiontype = strings.Replace(interventiontype, "\n", "", -1)
 
-	jsonData := map[string]string{"created": date,"subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
+	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
 	jsonValue, _ := json.Marshal(jsonData)
 
 	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+
+	print(response)
 
 	if err != nil {
 
