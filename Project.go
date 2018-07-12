@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"time"
-	"bufio"
 	"strings"
 
 	"math/rand"
@@ -159,31 +157,29 @@ start:
 
 }
 
-func singlelog() {
+func singlelog(id int) {
 
-	var (
-		id int
+	//var	id int
 
-		tempo int
+	//var	tempo int
 
-		url string
+	var	url string
 
-		err error
-	)
+	var	err error
 
-start:
+//start:
 
-	fmt.Println("Enter a number")
+	//fmt.Println("Enter a number")
 
-	tempo, _ = fmt.Scan(&id)
+	//tempo, _ = fmt.Scan(&id)
 
-	if tempo == 0 {
+//	if tempo == 0 {
 
-		fmt.Println(" \nThis is not a number \n ")
+//		fmt.Println(" \nThis is not a number \n ")
 
-		goto start
+//		goto start
 
-	}
+//	}
 
 	fmt.Println("\nAwaiting reponse")
 
@@ -222,29 +218,29 @@ start:
 	}
 }
 
-func retrievefile() {
+func retrievefile(id int) {
 
-	var id int
+	//var id int
 
-	var tempo int
+	//var tempo int
 
 	var url string
 
 	var err error
 
-start:
+//start:
 
-	fmt.Println("Enter a number")
+	//fmt.Println("Enter a number")
 
-	tempo, _ = fmt.Scan(&id)
+	//tempo, _ = fmt.Scan(&id)
 
-	if tempo == 0 {
+	//if tempo == 0 {
 
-		fmt.Println("\nThis is not a number \n ")
+	//	fmt.Println("\nThis is not a number \n ")
 
-		goto start
+	//	goto start
 
-	}
+	//}
 
 	fmt.Println("\nAwaiting reponse")
 
@@ -269,21 +265,21 @@ start:
 	}
 }
 
-func uploadfile() {
+func uploadfile(path string,name string,id int) {
 
-	var path string
+	//var path string
 
-	var name string
+	//var name string
 
 	var url string
 
-	var id int
+	//var id int
 
 	url = "http://localhost:8081/api/upload/"
 
-	fmt.Println("Enter the path of the file with the name")
+	//fmt.Println("Enter the path of the file with the name")
 
-	fmt.Scan(&path)
+	//fmt.Scan(&path)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 
@@ -348,13 +344,13 @@ func uploadfile() {
 			fmt.Println("unknown file type uploaded")
 		}
 
-		fmt.Println("Enter the name of the file")
+	//	fmt.Println("Enter the name of the file")
 
-		fmt.Scan(&name)
+	//	fmt.Scan(&name)
 
-		fmt.Println("Enter the ID of the log")
+	//	fmt.Println("Enter the ID of the log")
 
-		fmt.Scan(&id)
+	//	fmt.Scan(&id)
 
 		url += strconv.Itoa(id)
 
@@ -438,7 +434,7 @@ func requesttoken() string {
 	*/
 	var url string
 
-	url = "http://heikovm.hihva.nl/"
+	url = "http://localhost:8081/"
 
 	response, err := http.Get(url)
 
@@ -457,31 +453,9 @@ func requesttoken() string {
 	}
 }
 
-func createlog() {
+func createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string) {
 
 	var url string
-
-	var subsystem string
-
-	var class string
-
-	var typelog string
-
-	var run string
-
-	var author string
-
-	var title string
-
-	var text string
-
-	var followsup string
-
-	var interruptionduration string
-
-	var interventiontype string
-
-	var date string
 
 	fmt.Println("\nAwaiting reponse")
 
@@ -495,91 +469,91 @@ func createlog() {
 
 	}
 
-	created := time.Now()
+	//created := time.Now()
 
-	date = created.Format("2006-01-02 15:04:05")
+	//date = created.Format("2006-01-02 15:04:05")
 
-	fmt.Println(date, "\n")
+	//fmt.Println(date, "\n")
 
-	fmt.Println("Enter the susbsystem : \n")
+	//fmt.Println("Enter the susbsystem : \n")
 
-	reader := bufio.NewReader(os.Stdin)
+	//reader := bufio.NewReader(os.Stdin)
 
-	subsystem, _ = reader.ReadString('\n')
-
-	subsystem = strings.Replace(subsystem, "\n", "", -1)
-
-	fmt.Println("\nEnter the class : \n ")
-
-	reader1 := bufio.NewReader(os.Stdin)
-
-	class, _ = reader1.ReadString('\n')
-
-	class = strings.Replace(class, "\n", "", -1)
-
-	fmt.Println("\nEnter the type of run : \n ")
-
-	reader2 := bufio.NewReader(os.Stdin)
-
-	typelog, _ = reader2.ReadString('\n')
-
-	typelog = strings.Replace(typelog, "\n", "", -1)
-
-	fmt.Println("\nEnter the run number : \n ")
-
-	reader3 := bufio.NewReader(os.Stdin)
-
-	run, _ = reader3.ReadString('\n')
-
-	run = strings.Replace(run, "\n", "", -1)
-
-	fmt.Println("\nEnter the author : \n ")
-
-	reader4 := bufio.NewReader(os.Stdin)
-
-	author, _ = reader4.ReadString('\n')
-
-	author = strings.Replace(author, "\n", "", -1)
-
-	fmt.Println("\nEnter the title : \n ")
-
-	reader5 := bufio.NewReader(os.Stdin)
-
-	title, _ = reader5.ReadString('\n')
-
-	title = strings.Replace(title, "\n", "", -1)
-
-	fmt.Println("\nEnter the description : \n ")
-
-	reader6 := bufio.NewReader(os.Stdin)
-
-	text, _ = reader6.ReadString('\n')
-
-	text = strings.Replace(text, "\n", "", -1)
-
-	fmt.Println("\nEnter the follow up : \n ")
-
-	reader7 := bufio.NewReader(os.Stdin)
-
-	followsup, _ = reader7.ReadString('\n')
-
-	followsup = strings.Replace(followsup, "\n", "", -1)
-
-	fmt.Println("\nEnter the interruption duration : \n ")
-
-	reader8 := bufio.NewReader(os.Stdin)
-
-	interruptionduration, _ = reader8.ReadString('\n')
-
-	interruptionduration = strings.Replace(interruptionduration, "\n", "", -1)
-
-	fmt.Println("\nEnter the intervention type : \n ")
-
-	reader9 := bufio.NewReader(os.Stdin)
-
-	interventiontype, _ = reader9.ReadString('\n')
-
-	interventiontype = strings.Replace(interventiontype, "\n", "", -1)
+	//subsystem, _ = reader.ReadString('\n')
+	//
+	//subsystem = strings.Replace(subsystem, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the class : \n ")
+	//
+	//reader1 := bufio.NewReader(os.Stdin)
+	//
+	//class, _ = reader1.ReadString('\n')
+	//
+	//class = strings.Replace(class, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the type of run : \n ")
+	//
+	//reader2 := bufio.NewReader(os.Stdin)
+	//
+	//typelog, _ = reader2.ReadString('\n')
+	//
+	//typelog = strings.Replace(typelog, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the run number : \n ")
+	//
+	//reader3 := bufio.NewReader(os.Stdin)
+	//
+	//run, _ = reader3.ReadString('\n')
+	//
+	//run = strings.Replace(run, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the author : \n ")
+	//
+	//reader4 := bufio.NewReader(os.Stdin)
+	//
+	//author, _ = reader4.ReadString('\n')
+	//
+	//author = strings.Replace(author, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the title : \n ")
+	//
+	//reader5 := bufio.NewReader(os.Stdin)
+	//
+	//title, _ = reader5.ReadString('\n')
+	//
+	//title = strings.Replace(title, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the description : \n ")
+	//
+	//reader6 := bufio.NewReader(os.Stdin)
+	//
+	//text, _ = reader6.ReadString('\n')
+	//
+	//text = strings.Replace(text, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the follow up : \n ")
+	//
+	//reader7 := bufio.NewReader(os.Stdin)
+	//
+	//followsup, _ = reader7.ReadString('\n')
+	//
+	//followsup = strings.Replace(followsup, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the interruption duration : \n ")
+	//
+	//reader8 := bufio.NewReader(os.Stdin)
+	//
+	//interruptionduration, _ = reader8.ReadString('\n')
+	//
+	//interruptionduration = strings.Replace(interruptionduration, "\n", "", -1)
+	//
+	//fmt.Println("\nEnter the intervention type : \n ")
+	//
+	//reader9 := bufio.NewReader(os.Stdin)
+	//
+	//interventiontype, _ = reader9.ReadString('\n')
+	//
+	//interventiontype = strings.Replace(interventiontype, "\n", "", -1)
 
 	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
@@ -594,78 +568,78 @@ func createlog() {
 	}
 }
 
-func printMenu() {
+//func printMenu() {
+//
+//	fmt.Println("\n|-------------------------------------------------------|")
+//
+//	fmt.Println("|Choose 1 to retrieve a single log entry                |")
+//
+//	fmt.Println("|Choose 2 to retrieve a file from the single log entry  |")
+//
+//	fmt.Println("|Choose 3 to retrieves all log entries                  |")
+//
+//	fmt.Println("|Choose 4 to create an log entry                        |")
+//
+//	fmt.Println("|Choose 5 to uploads a file to the log entry            |")
+//
+//	fmt.Println("|Choose 6 to find a user                                |")
+//
+//	fmt.Println("|Choose 7 to exit                                       |")
+//
+//	fmt.Println("|-------------------------------------------------------|\n ")
+//
+//}
 
-	fmt.Println("\n|-------------------------------------------------------|")
-
-	fmt.Println("|Choose 1 to retrieve a single log entry                |")
-
-	fmt.Println("|Choose 2 to retrieve a file from the single log entry  |")
-
-	fmt.Println("|Choose 3 to retrieves all log entries                  |")
-
-	fmt.Println("|Choose 4 to create an log entry                        |")
-
-	fmt.Println("|Choose 5 to uploads a file to the log entry            |")
-
-	fmt.Println("|Choose 6 to find a user                                |")
-
-	fmt.Println("|Choose 7 to exit                                       |")
-
-	fmt.Println("|-------------------------------------------------------|\n ")
-
-}
-
-func main() {
-	//var token string
-
-	var choice int
-
-	//token = requesttoken()
-
-	for choice != 7 {
-
-		printMenu()
-
-		fmt.Scan(&choice)
-
-		switch choice {
-
-		case 1:
-
-			singlelog()
-
-		case 2:
-
-			retrievefile()
-
-		case 3:
-
-			alllog()
-
-		case 4:
-
-			createlog()
-
-		case 5:
-
-			uploadfile()
-
-		case 6:
-
-			userinfo()
-
-		case 7:
-
-			fmt.Println("Bye !")
-
-		case 8:
-
-			test_unitary()
-
-		default:
-
-			fmt.Printf("Wrong choice !")
-		}
-	}
-}
+//func main() {
+//	//var token string
+//
+//	var choice int
+//
+//	//token = requesttoken()
+//
+//	for choice != 7 {
+//
+//		printMenu()
+//
+//		fmt.Scan(&choice)
+//
+//		switch choice {
+//
+//		case 1:
+//
+//			singlelog()
+//
+//		case 2:
+//
+//			retrievefile()
+//
+//		case 3:
+//
+//			alllog()
+//
+//		case 4:
+//
+//			createlog()
+//
+//		case 5:
+//
+//			uploadfile()
+//
+//		case 6:
+//
+//			userinfo()
+//
+//		case 7:
+//
+//			fmt.Println("Bye !")
+//
+//		case 8:
+//
+//			test_unitary()
+//
+//		default:
+//
+//			fmt.Printf("Wrong choice !")
+//		}
+//	}
+//}
