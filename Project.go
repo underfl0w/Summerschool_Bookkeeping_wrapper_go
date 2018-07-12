@@ -153,11 +153,11 @@ start:
 
 	}
 
-	alllog()
+	Alllog()
 
 }
 
-func singlelog(id int) {
+func Singlelog(id int) {
 
 	//var	id int
 
@@ -218,7 +218,7 @@ func singlelog(id int) {
 	}
 }
 
-func retrievefile(id int) {
+func Retrievefile(id int) {
 
 	//var id int
 
@@ -265,7 +265,7 @@ func retrievefile(id int) {
 	}
 }
 
-func uploadfile(path string,name string,id int) {
+func Uploadfile(path string,name string,id int) {
 
 	//var path string
 
@@ -372,7 +372,7 @@ func uploadfile(path string,name string,id int) {
 
 }
 
-func alllog() {
+func Alllog() {
 
 	var url string
 
@@ -421,14 +421,14 @@ func alllog() {
 	}
 }
 
-func userinfo() {
+func Userinfo() {
 
 	fmt.Println("Info")
 
 }
 
 // This function is not needed anymore. The need for tokens has been disabled by Frederick.
-func requesttoken() string {
+func Requesttoken() string {
 	/*
 		Fetch the authentication token that is needed for making requests.
 	*/
@@ -453,7 +453,7 @@ func requesttoken() string {
 	}
 }
 
-func createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string) {
+func Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string) {
 
 	var url string
 
@@ -595,7 +595,7 @@ func printMenu() {
 	//
 	//	var choice int
 	//
-	//	//token = requesttoken()
+	//	//token = Requesttoken()
 	//
 	//	for choice != 7 {
 	//
@@ -607,11 +607,11 @@ func printMenu() {
 	//
 	//		case 1:
 	//
-	//			singlelog()
+	//			Singlelog()
 	//
 	//		case 2:
 	//
-	//			retrievefile()
+	//			Retrievefile()
 	//
 	//		case 3:
 	//
@@ -619,15 +619,15 @@ func printMenu() {
 	//
 	//		case 4:
 	//
-	//			createlog()
+	//			Createlog()
 	//
 	//		case 5:
 	//
-	//			uploadfile()
+	//			Uploadfile()
 	//
 	//		case 6:
 	//
-	//			userinfo()
+	//			Userinfo()
 	//
 	//		case 7:
 	//
