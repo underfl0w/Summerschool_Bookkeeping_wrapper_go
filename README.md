@@ -3,18 +3,18 @@
 
 The project is to create a go library that communicate with the API REST of the database that store the metadata logs from ALICE (CERN).
 
--func test_unitarytest() 
+-func Testunitarytest() 
 
--func singlelog(id int) 
+-func Singlelog(id int) 
 
--func retrievefile() 
+-func Retrievefile() 
 
--func uploadfile(id int) 
+-func Uploadfile(id int) 
 
--func alllog() 
+-func Alllog() 
 
--func userinfo() 
+-func Userinfo() 
 
--func requesttoken() 
+-func Requesttoken() 
 
--func createlog() 
+-Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string)
