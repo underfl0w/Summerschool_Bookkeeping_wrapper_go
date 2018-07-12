@@ -12,7 +12,7 @@ import (
 	"math/rand"
 )
 
-func Testunitary() {
+func Testunitary(server string) {
 
 	var url string
 
@@ -42,9 +42,8 @@ func Testunitary() {
 
 	var id int
 
-	fmt.Println("\nAwaiting reponse\n")
 
-	url = "http://localhost:8081/api/post/entry/data/"
+	url = "http://" + server + "/api/post/entry/data/"
 
 	_, err := http.Get(url)
 
@@ -93,7 +92,7 @@ start:
 	date = strconv.Itoa(rand.Intn(20)) + strconv.Itoa(rand.Intn(100)) + "-" + strconv.Itoa(rand.Intn(13)) + "-" + strconv.Itoa(rand.Intn(32)) + " " + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24))
 
 	interruptionduration = strconv.Itoa(rand.Intn(20)) + strconv.Itoa(rand.Intn(100)) + "-" + strconv.Itoa(rand.Intn(13)) + "-" + strconv.Itoa(rand.Intn(32)) + " " + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24))
-
+/*
 	fmt.Println("Created :")
 
 	fmt.Println("\n")
@@ -161,7 +160,7 @@ start:
 	fmt.Println(interventiontype)
 
 	fmt.Println("\n")
-
+*/
 	jsonData := map[string]string{"created": date, "subsystem": subsystem, "class": class, "type": typelog, "run": run, "author": author, "title": title, "log_entry_text": text, "follow_ups": followsup, "interruption_duration": interruptionduration, "intervention_type": interventiontype}
 
 	jsonValue, _ := json.Marshal(jsonData)
@@ -190,9 +189,9 @@ start:
 
 }
 
-func Singlelog(id int) {
+func Singlelog(logIdentifier int, server string) string{
 
-	//var	id int
+	//var	logIdentifier int
 
 	//var	tempo int
 
@@ -204,7 +203,7 @@ func Singlelog(id int) {
 
 	//fmt.Println("Enter a number")
 
-	//tempo, _ = fmt.Scan(&id)
+	//tempo, _ = fmt.Scan(&logIdentifier)
 
 //	if tempo == 0 {
 
@@ -214,19 +213,17 @@ func Singlelog(id int) {
 
 //	}
 
-	fmt.Println("\nAwaiting reponse")
 
-	url = "http://localhost:8081/api/single/entry/"
+	url = "http://" + server + "/api/single/entry/"
 
-	url += strconv.Itoa(id)
+	url += strconv.Itoa(logIdentifier)
 
 	//url += "?token=" + token
 
 	response, err := http.Get(url)
 
 	if err != nil {
-
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return "The HTTP request failed with error" + err.Error()
 
 	} else {
 
@@ -246,12 +243,13 @@ func Singlelog(id int) {
 
 		data = strings.Replace(data, "}", "\n}\n", number_2)
 
-		fmt.Println(data)
+		return data
 
 	}
+	return "nill"
 }
 
-func Retrievefile(id int) {
+func Retrievefile(id int, server string) {
 
 	//var id int
 
@@ -275,9 +273,8 @@ func Retrievefile(id int) {
 
 	//}
 
-	fmt.Println("\nAwaiting reponse")
 
-	url = "http://localhost:8081/api/single/entry/file/"
+	url = "http://"+server+"/api/single/entry/file/"
 
 	url += strconv.Itoa(id)
 
@@ -298,7 +295,7 @@ func Retrievefile(id int) {
 	}
 }
 
-func Uploadfile(path string,name string,id int) {
+func Uploadfile(path string,name string,id int, server string) {
 
 	//var path string
 
@@ -308,7 +305,7 @@ func Uploadfile(path string,name string,id int) {
 
 	//var id int
 
-	url = "http://localhost:8081/api/upload/"
+	url = "http://" + server + "/api/upload/"
 
 	//fmt.Println("Enter the path of the file with the name")
 
@@ -405,7 +402,7 @@ func Uploadfile(path string,name string,id int) {
 
 }
 
-func Alllog() {
+func Alllog(server string) string{
 
 	var url string
 
@@ -413,15 +410,14 @@ func Alllog() {
 
 	fmt.Println("\nAwaiting reponse")
 
-	url = "http://localhost:8081/api/all/entries/"
+	url = "http://" + server + "/api/all/entries/"
 
 	//url += "?token=" + token
 
 	response, err := http.Get(url)
 
 	if err != nil {
-
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return "The HTTP request failed with error" + err.Error()
 
 	} else {
 
@@ -449,12 +445,12 @@ func Alllog() {
 
 		data = strings.Replace(data, "}", "\n}\n", number_2)
 
-		fmt.Println(data)
+		return data
 
 	}
 }
 
-func Userinfo() {
+func Userinfo(server string) {
 
 	fmt.Println("Info")
 
@@ -467,7 +463,7 @@ func Userinfo() {
 //	*/
 //	var url string
 //
-//	url = "http://localhost:8081/"
+//	url = server
 //
 //	response, err := http.Get(url)
 //
@@ -486,19 +482,16 @@ func Userinfo() {
 //	}
 //}
 
-func Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string) {
+func Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string, server string) []byte{
 
 	var url string
 
-	fmt.Println("\nAwaiting reponse")
-
-	url = "http://localhost:8081/api/post/entry/data/"
+	url = "http://" + server + "/api/post/entry/data/"
 
 	_, err := http.Get(url)
 
 	if err != nil {
-
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil
 
 	}
 
@@ -610,10 +603,9 @@ func Createlog(date string,subsystem string,class string,typelog string,run stri
 
 	body, _ := ioutil.ReadAll(resp.Body)
 
-	fmt.Println(string(body))
+	return body
 }
 
-<<<<<<< HEAD
 //func printMenu() {
 //
 //	fmt.Println("\n|-------------------------------------------------------|")
@@ -689,7 +681,7 @@ func Createlog(date string,subsystem string,class string,typelog string,run stri
 //		}
 //	}
 //}
-=======
+
 func printMenu() {
 	//
 	//	fmt.Println("\n|-------------------------------------------------------|")
