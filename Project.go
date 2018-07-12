@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package Library
+=======
+package aliceREST
+>>>>>>> b811b9640fc88ff5a97c49385637605dade98dc9
 
 import (
 	"bytes"
@@ -613,6 +617,7 @@ func Createlog(date string,subsystem string,class string,typelog string,run stri
 	fmt.Println(string(body))
 }
 
+<<<<<<< HEAD
 //func printMenu() {
 //
 //	fmt.Println("\n|-------------------------------------------------------|")
@@ -688,3 +693,81 @@ func Createlog(date string,subsystem string,class string,typelog string,run stri
 //		}
 //	}
 //}
+=======
+func printMenu() {
+	//
+	//	fmt.Println("\n|-------------------------------------------------------|")
+	//
+	//	fmt.Println("|Choose 1 to retrieve a single log entry                |")
+	//
+	//	fmt.Println("|Choose 2 to retrieve a file from the single log entry  |")
+	//
+	//	fmt.Println("|Choose 3 to retrieves all log entries                  |")
+	//
+	//	fmt.Println("|Choose 4 to create an log entry                        |")
+	//
+	//	fmt.Println("|Choose 5 to uploads a file to the log entry            |")
+	//
+	//	fmt.Println("|Choose 6 to find a user                                |")
+	//
+	//	fmt.Println("|Choose 7 to exit                                       |")
+	//
+	//	fmt.Println("|-------------------------------------------------------|\n ")
+	//
+	//}
+
+	//func main() {
+	//	//var token string
+	//
+	//	var choice int
+	//
+	//	//token = requesttoken()
+	//
+	//	for choice != 7 {
+	//
+	//		printMenu()
+	//
+	//		fmt.Scan(&choice)
+	//
+	//		switch choice {
+	//
+	//		case 1:
+	//
+	//			singlelog()
+	//
+	//		case 2:
+	//
+	//			retrievefile()
+	//
+	//		case 3:
+	//
+	//			alllog()
+	//
+	//		case 4:
+	//
+	//			createlog()
+	//
+	//		case 5:
+	//
+	//			uploadfile()
+	//
+	//		case 6:
+	//
+	//			userinfo()
+	//
+	//		case 7:
+	//
+	//			fmt.Println("Bye !")
+	//
+	//		case 8:
+	//
+	//			test_unitary()
+	//
+	//		default:
+	//
+	//			fmt.Printf("Wrong choice !")
+	//		}
+	//	}
+	//}
+}
+>>>>>>> b811b9640fc88ff5a97c49385637605dade98dc9
