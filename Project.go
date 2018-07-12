@@ -1,4 +1,4 @@
-package main
+package aliceREST
 
 import (
 	"bytes"
@@ -643,7 +643,4 @@ func printMenu() {
 	//		}
 	//	}
 	//}
-}
-func main() {
-
 }

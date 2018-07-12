@@ -1,9 +1,7 @@
 package main
 
-import (
-	""
-)
-
+import "git"
 func main() {
-	
+	git.alllog();
+
 }
