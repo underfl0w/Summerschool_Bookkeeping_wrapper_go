@@ -587,8 +587,6 @@ func createlog() {
 
 	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 
-	print(response)
-
 	if err != nil {
 
 		fmt.Printf("The HTTP request failed with error %s\n", err)
