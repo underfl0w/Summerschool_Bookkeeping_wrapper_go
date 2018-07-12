@@ -155,7 +155,7 @@ func test_unitary(){
 
 	}
 
-	fmt.Println(jsonData)
+	alllog()
 
 }
 
