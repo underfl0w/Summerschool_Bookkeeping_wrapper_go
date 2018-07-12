@@ -9,11 +9,10 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
 	"math/rand"
 )
 
-func test_unitary() {
+func Testunitary() {
 
 	var url string
 
@@ -95,45 +94,67 @@ start:
 
 	interruptionduration = strconv.Itoa(rand.Intn(20)) + strconv.Itoa(rand.Intn(100)) + "-" + strconv.Itoa(rand.Intn(13)) + "-" + strconv.Itoa(rand.Intn(32)) + " " + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24)) + ":" + strconv.Itoa(rand.Intn(24))
 
+	fmt.Println("Created :")
+
 	fmt.Println("\n")
 
 	fmt.Println(date)
+
+	fmt.Println("\nSubsystem :")
 
 	fmt.Println("\n")
 
 	fmt.Println(subsystem)
 
+	fmt.Println("\nClass :")
+
 	fmt.Println("\n")
 
 	fmt.Println(class)
+
+	fmt.Println("\nType :")
 
 	fmt.Println("\n")
 
 	fmt.Println(typelog)
 
+	fmt.Println("\nRun Number :")
+
 	fmt.Println("\n")
 
 	fmt.Println(run)
+
+	fmt.Println("\nAuthor :")
 
 	fmt.Println("\n")
 
 	fmt.Println(author)
 
+	fmt.Println("\nTitle :")
+
 	fmt.Println("\n")
 
 	fmt.Println(title)
+
+	fmt.Println("\nlog_entry_text :")
 
 	fmt.Println("\n")
 
 	fmt.Println(text)
 
+	fmt.Println("\nfollowsup:")
+
 	fmt.Println("\n")
 
 	fmt.Println(followsup)
 
+	fmt.Println("\nInterruption_duration :")
+
 	fmt.Println("\n")
 
 	fmt.Println(interruptionduration)
+
+	fmt.Println("\nIntervention_type :")
 
 	fmt.Println("\n")
 
@@ -145,15 +166,27 @@ start:
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+
+	resp, err := client.Do(req)
 
 	if err != nil {
 
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		panic(err)
 
 	}
 
-	Alllog()
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(string(body))
+
+	//alllog()
 
 }
 
@@ -428,30 +461,30 @@ func Userinfo() {
 }
 
 // This function is not needed anymore. The need for tokens has been disabled by Frederick.
-func Requesttoken() string {
-	/*
-		Fetch the authentication token that is needed for making requests.
-	*/
-	var url string
-
-	url = "http://localhost:8081/"
-
-	response, err := http.Get(url)
-
-	fmt.Println("\n", response, "\n")
-
-	if err != nil {
-
-		fmt.Printf("The HTTP request failed with error %s\n", err)
-
-		return ""
-
-	} else {
-
-		return string(response.Request.URL.RawQuery)
-
-	}
-}
+//func Requesttoken() string {
+//	/*
+//		Fetch the authentication token that is needed for making requests.
+//	*/
+//	var url string
+//
+//	url = "http://localhost:8081/"
+//
+//	response, err := http.Get(url)
+//
+//	fmt.Println("\n", response, "\n")
+//
+//	if err != nil {
+//
+//		fmt.Printf("The HTTP request failed with error %s\n", err)
+//
+//		return ""
+//
+//	} else {
+//
+//		return string(response.Request.URL.RawQuery)
+//
+//	}
+//}
 
 func Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string) {
 
@@ -559,15 +592,104 @@ func Createlog(date string,subsystem string,class string,typelog string,run stri
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	_, err = http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+
+	resp, err := client.Do(req)
 
 	if err != nil {
 
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		panic(err)
 
 	}
+
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(string(body))
 }
 
+<<<<<<< HEAD
+//func printMenu() {
+//
+//	fmt.Println("\n|-------------------------------------------------------|")
+//
+//	fmt.Println("|Choose 1 to retrieve a single log entry                |")
+//
+//	fmt.Println("|Choose 2 to retrieve a file from the single log entry  |")
+//
+//	fmt.Println("|Choose 3 to retrieves all log entries                  |")
+//
+//	fmt.Println("|Choose 4 to create an log entry                        |")
+//
+//	fmt.Println("|Choose 5 to uploads a file to the log entry            |")
+//
+//	fmt.Println("|Choose 6 to find a user                                |")
+//
+//	fmt.Println("|Choose 7 to exit                                       |")
+//
+//	fmt.Println("|-------------------------------------------------------|\n ")
+//
+//}
+
+//func main() {
+//	//var token string
+//
+//	var choice int
+//
+//	//token = requesttoken()
+//
+//	for choice != 7 {
+//
+//		printMenu()
+//
+//		fmt.Scan(&choice)
+//
+//		switch choice {
+//
+//		case 1:
+//
+//			//singlelog()
+//
+//		case 2:
+//
+//			//retrievefile()
+//
+//		case 3:
+//
+//			Alllog()
+//
+//		case 4:
+//
+//			//createlog()
+//
+//		case 5:
+//
+//			//uploadfile()
+//
+//		case 6:
+//
+//			Userinfo()
+//
+//		case 7:
+//
+//			fmt.Println("Bye !")
+//
+//		case 8:
+//
+//			Testunitary()
+//
+//		default:
+//
+//			fmt.Printf("Wrong choice !")
+//		}
+//	}
+//}
+=======
 func printMenu() {
 	//
 	//	fmt.Println("\n|-------------------------------------------------------|")
