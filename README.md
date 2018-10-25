@@ -20,4 +20,4 @@ The project is to create a go library that communicate with the API REST of the 
 -Createlog(date string,subsystem string,class string,typelog string,run string,author string,title string,text string,followsup string,interruptionduration string,interventiontype string)
 
 
-REST API by Frederick and Heiko. Go library by Thomas, Julien and Augustin 
+REST API by Frederick and Heiko. Go library by Thomas, Julien, Augustin And Jurjen  
